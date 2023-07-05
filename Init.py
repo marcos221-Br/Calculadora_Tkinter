@@ -1,4 +1,6 @@
+#Tela calculadora
 from tkinter import *
+import Functions as fc
 
 class Main: #Classe inicial
     def __init__(self,master):
@@ -70,18 +72,14 @@ class Main: #Classe inicial
 
         self.result = Button(self.containerNumpad, text='=', width=buttonWidth, font=self.defaultFontNumpad, command=self.countResult)
         self.result.grid(row=5,column=4)
+
+        self.sum = Button(self.containerNumpad, text='+', width=buttonWidth, font=self.defaultFontNumpad, command=self.countResult)
+        self.sum.grid(row=4,column=4)
     
     def alterSignal(self):
-        number = float(self.display.get().replace(',','.'))
-        if (number%1) == 0:
-            number = int(number)
+        number = self.display.get()
         self.display.delete(0,END)
-        if number>0:
-            self.display.insert(INSERT,'-')
-            self.display.insert(INSERT,'{}'.format(number).replace('.',','))
-        else:
-            number *= -1
-            self.display.insert(INSERT,'{}'.format(number).replace('.',','))
+        self.display.insert(INSERT,fc.alterSignal(number))
 
     def numberOfComma(self):
         if self.display.get() == '':
