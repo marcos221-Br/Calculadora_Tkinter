@@ -85,41 +85,41 @@ class Main: #Classe inicial
         self.minus.grid(row=4,column=4)
 
         self.div = Button(self.containerNumpad, text='/', width=buttonWidth, font=self.defaultFontNumpad)
-        self.div['command'] = lambda command='/':''
+        self.div['command'] = lambda command='/':self.operator(operator=command)
         self.div.grid(row=2,column=4)
 
         self.sqrt = Button(self.containerNumpad, text='x²', width=buttonWidth, font=self.defaultFontNumpad)
         self.sqrt['command'] = lambda command='x²':''
         self.sqrt.grid(row=2,column=2)
     
-    def alterSignal(self):
+    def alterSignal(self): #Altera o sinal do número
         number = self.display.get()
         self.display.delete(0,END)
         self.display.insert(INSERT,fc.alterSignal(number))
     
-    def operator(self,operator):
+    def operator(self,operator): #Seleciona o operador que vai ser utilizado na conta
         display = self.display.get()
         self.display.delete(0,END)
         self.display.insert(INSERT,fc.operation(display,operator))
     
-    def clear(self):
+    def clear(self): #Limpa o display e as variáveis
         self.display.delete(0,END)
         fc.clear()
 
-    def numberOfComma(self):
+    def numberOfComma(self): #Limita o número de virgulas que pode ter no número
         if self.display.get() == '':
             return
         if self.display.get().find(',') == -1:
             self.display.insert(INSERT,',')
     
-    def result(self):
+    def result(self): #Mostra o resultado da conta
         display = self.display.get()
         self.display.delete(0,END)
         self.display.insert(INSERT,fc.result(display))
 
-init = Tk()
-init.geometry('310x385')
-init.resizable(False,False)
-init.title('Calculadora')
-Main(init)
-init.mainloop()
+init = Tk() #Atribui os comandos do iniciador do tkinter a init
+init.geometry('310x385') #Tamanho da janela
+init.resizable(False,False) #Não deixa o usuário alterar o tamanho da janela
+init.title('Calculadora') #Titulo do programa
+Main(init) #Seta a classe inicial
+init.mainloop() #Inicia o programa
