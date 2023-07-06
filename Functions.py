@@ -51,7 +51,13 @@ def clear(): #Limpa todos os dados armazenados
     count = [None,None]
     counterOperation = 0
 
+def minus(number1,number2): #Altera a forma de conta dependendo se o número é positivo ou negativo
+    if number1 >= 0:
+        return (number1 - number2)*-1
+    return number1 - number2
+
+
 operators = {'+':lambda number1, number2:number1 + number2,
-             '-':lambda number1, number2:number1 - number2,
+             '-':lambda number1, number2:minus(number1,number2),
              '*':lambda number1, number2:number1 * number2,
              '/':lambda number1, number2:number1 / number2}

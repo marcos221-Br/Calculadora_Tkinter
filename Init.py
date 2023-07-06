@@ -81,7 +81,7 @@ class Main: #Classe inicial
         self.mult.grid(row=3,column=4)
 
         self.minus = Button(self.containerNumpad, text='-', width=buttonWidth, font=self.defaultFontNumpad)
-        self.minus['command'] = lambda command='-':''
+        self.minus['command'] = lambda command='-':self.operator(operator=command)
         self.minus.grid(row=4,column=4)
 
         self.div = Button(self.containerNumpad, text='/', width=buttonWidth, font=self.defaultFontNumpad)
