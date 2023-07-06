@@ -1,6 +1,7 @@
 #Funções utilizadas na calculadora
 count = [None,None]
 counterOperation = 0
+counterDiv = 0
 
 def alterSignal(display:str): #Altera o sinal do número que está sendo mostrado no display
     try:
@@ -14,7 +15,8 @@ def alterSignal(display:str): #Altera o sinal do número que está sendo mostrad
 
 def operation(display:str,operator:str): #Seta a operação que vai ser feita
     try:
-        global counterOperation, count
+        global counterOperation, count, counterDiv
+        counterDiv = 0
         if count[0] == None:
             count[0] = float(display.replace(',','.'))
             count[1] = operator
@@ -47,17 +49,24 @@ def result(display:str): #Mostra o resultado da conta
         return ''
 
 def clear(): #Limpa todos os dados armazenados
-    global count, counterOperation
+    global count, counterOperation, counterDiv
     count = [None,None]
     counterOperation = 0
+    counterDiv = 0
 
-def minus(number1,number2): #Altera a forma de conta dependendo se o número é positivo ou negativo
+def minus(number1:float,number2:float): #Altera a forma de conta dependendo se o número é positivo ou negativo
     if number1 >= 0:
         return (number1 - number2)*-1
     return number1 - number2
 
+def div(number1:float,number2:float): #Altera a forma da conta dependendo se é a primeira conta de divisão ou a segunda
+    global counterDiv
+    if counterDiv == 0:
+        counterDiv = 1
+        return number1 / number2
+    return number2 / number1
 
 operators = {'+':lambda number1, number2:number1 + number2,
              '-':lambda number1, number2:minus(number1,number2),
              '*':lambda number1, number2:number1 * number2,
-             '/':lambda number1, number2:number1 / number2}
+             '/':lambda number1, number2:div(number1,number2)}
