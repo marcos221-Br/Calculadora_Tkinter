@@ -47,6 +47,9 @@ def result(display:str): #Mostra o resultado da conta
     except ValueError:
         print('Sem números no display')
         return ''
+    except TypeError:
+        if result == ZeroDivisionError:
+            return 'Impossível dividir por 0'
 
 def clear(): #Limpa todos os dados armazenados
     global count, counterOperation, counterDiv
@@ -60,11 +63,14 @@ def minus(number1:float,number2:float): #Altera a forma de conta dependendo se o
     return number1 - number2
 
 def div(number1:float,number2:float): #Altera a forma da conta dependendo se é a primeira conta de divisão ou a segunda
-    global counterDiv
-    if counterDiv == 0:
-        counterDiv = 1
-        return number1 / number2
-    return number2 / number1
+    try:
+        global counterDiv
+        if counterDiv == 0:
+            counterDiv = 1
+            return number1 / number2
+        return number2 / number1
+    except ZeroDivisionError:
+        return ZeroDivisionError
 
 operators = {'+':lambda number1, number2:number1 + number2,
              '-':lambda number1, number2:minus(number1,number2),
