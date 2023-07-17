@@ -93,7 +93,7 @@ class Main: #Classe inicial
         self.sqrt.grid(row=2,column=3)
 
         self.pow = Button(self.containerNumpad, text='x²', width=buttonWidth, font=self.defaultFontNumpad)
-        self.pow['command'] = lambda command='x²':''
+        self.pow['command'] = lambda command='x²':self.uniqueOperation(operator=command)
         self.pow.grid(row=2,column=2)
 
         self.frac = Button(self.containerNumpad, text='1/x', width=buttonWidth, font=self.defaultFontNumpad)
@@ -124,6 +124,11 @@ class Main: #Classe inicial
         display = self.display.get()
         self.display.delete(0,END)
         self.display.insert(INSERT,fc.result(display))
+    
+    def uniqueOperation(self,operator): #Mostra resultado para contas com apenas um número
+        display = self.display.get()
+        self.display.delete(0,END)
+        self.display.insert(INSERT,fc.uniqueOperation(display,operator))
 
 init = Tk() #Atribui os comandos do iniciador do tkinter a init
 init.geometry('310x385') #Tamanho da janela

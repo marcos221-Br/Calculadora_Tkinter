@@ -42,14 +42,15 @@ def result(display:str): #Mostra o resultado da conta
             count[0] = float(display.replace(',','.'))
         counterOperation = 1
         if (result%1) == 0:
-            return str(int(result))
-        return str(round(result,13))
+            return str(int(result)).replace('.',',')
+        return str(round(result,13)).replace('.',',')
     except ValueError:
         print('Sem números no display')
         return ''
     except TypeError:
         if result == ZeroDivisionError:
-            return 'Impossível dividir por 0'
+            print('Impossível dividir por 0')
+            return ''
 
 def clear(): #Limpa todos os dados armazenados
     global count, counterOperation, counterDiv
@@ -72,7 +73,19 @@ def div(number1:float,number2:float): #Altera a forma da conta dependendo se é 
     except ZeroDivisionError:
         return ZeroDivisionError
 
+def uniqueOperation(display:str,operator:str):
+    try:
+        result = unique[operator](float(display.replace(',','.')))
+        if (result%1) == 0:
+            return str(int(result)).replace('.',',')
+        return str(round(result,13)).replace('.',',')
+    except ValueError:
+        print('Sem números no display')
+        return ''
+
 operators = {'+':lambda number1, number2:number1 + number2,
              '-':lambda number1, number2:minus(number1,number2),
              '*':lambda number1, number2:number1 * number2,
              '/':lambda number1, number2:div(number1,number2)}
+
+unique = {'x²':lambda number: number*number}
