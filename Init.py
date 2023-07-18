@@ -89,7 +89,7 @@ class Main: #Classe inicial
         self.div.grid(row=2,column=4)
 
         self.sqrt = Button(self.containerNumpad, text='√x', width=buttonWidth, font=self.defaultFontNumpad)
-        self.sqrt['command'] = lambda command='√x':''
+        self.sqrt['command'] = lambda command='√x':self.uniqueOperation(operator=command)
         self.sqrt.grid(row=2,column=3)
 
         self.pow = Button(self.containerNumpad, text='x²', width=buttonWidth, font=self.defaultFontNumpad)
@@ -97,7 +97,7 @@ class Main: #Classe inicial
         self.pow.grid(row=2,column=2)
 
         self.frac = Button(self.containerNumpad, text='1/x', width=buttonWidth, font=self.defaultFontNumpad)
-        self.frac['command'] = lambda command='1/x':''
+        self.frac['command'] = lambda command='1/x':self.uniqueOperation(operator=command)
         self.frac.grid(row=2,column=1)
     
     def alterSignal(self): #Altera o sinal do número
@@ -115,10 +115,7 @@ class Main: #Classe inicial
         fc.clear()
 
     def numberOfComma(self): #Limita o número de virgulas que pode ter no número
-        if self.display.get() == '':
-            return
-        if self.display.get().find(',') == -1:
-            self.display.insert(INSERT,',')
+        self.display.insert(INSERT,fc.commaFinder(self.display.get()))
     
     def result(self): #Mostra o resultado da conta
         display = self.display.get()

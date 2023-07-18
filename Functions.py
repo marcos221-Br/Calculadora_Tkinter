@@ -1,4 +1,5 @@
 #Funções utilizadas na calculadora
+from math import sqrt
 count = [None,None]
 counterOperation = 0
 counterDiv = 0
@@ -59,7 +60,7 @@ def clear(): #Limpa todos os dados armazenados
     counterDiv = 0
 
 def minus(number1:float,number2:float): #Altera a forma de conta dependendo se o número é positivo ou negativo
-    if number1 >= 0:
+    if (number1 > 0):
         return (number1 - number2)*-1
     return number1 - number2
 
@@ -73,19 +74,29 @@ def div(number1:float,number2:float): #Altera a forma da conta dependendo se é 
     except ZeroDivisionError:
         return ZeroDivisionError
 
-def uniqueOperation(display:str,operator:str):
+def uniqueOperation(display:str,operator:str): #Função para realizar operações com apenas 1 número
     try:
         result = unique[operator](float(display.replace(',','.')))
         if (result%1) == 0:
-            return str(int(result)).replace('.',',')
+            return str(int(result))
         return str(round(result,13)).replace('.',',')
     except ValueError:
         print('Sem números no display')
         return ''
 
+def commaFinder(display:str):
+    if display == '':
+        print('Sem números no display')
+        return ''
+    if display.find(',') == -1:
+        return ','
+    return ''
+
 operators = {'+':lambda number1, number2:number1 + number2,
-             '-':lambda number1, number2:minus(number1,number2),
+             '-':lambda number1, number2:minus(number1,number2), #Verificar
              '*':lambda number1, number2:number1 * number2,
              '/':lambda number1, number2:div(number1,number2)}
 
-unique = {'x²':lambda number: number*number}
+unique = {'x²':lambda number: number*number,
+          '√x':lambda number: sqrt(number),
+          '1/x':lambda number: 1/number}
