@@ -3,6 +3,7 @@ from math import sqrt
 count = [None,None]
 counterOperation = 0
 counterDiv = 0
+counterMinus = 0
 
 def alterSignal(display:str): #Altera o sinal do número que está sendo mostrado no display
     try:
@@ -18,6 +19,7 @@ def operation(display:str,operator:str): #Seta a operação que vai ser feita
     try:
         global counterOperation, count, counterDiv
         counterDiv = 0
+        counterMinus = 0
         if count[0] == None:
             count[0] = float(display.replace(',','.'))
             count[1] = operator
@@ -54,15 +56,22 @@ def result(display:str): #Mostra o resultado da conta
             return ''
 
 def clear(): #Limpa todos os dados armazenados
-    global count, counterOperation, counterDiv
+    global count, counterOperation, counterDiv, counterMinus
     count = [None,None]
     counterOperation = 0
     counterDiv = 0
+    counterMinus = 0
 
 def minus(number1:float,number2:float): #Altera a forma de conta dependendo se o número é positivo ou negativo
-    if (number1 > 0):
-        return (number1 - number2)*-1
-    return number1 - number2
+    global counterMinus
+    if counterMinus == 0:
+        number1, number2 = number2, number1
+    counterMinus = 1
+    if number1 > 0 and number2 > 0:
+        if number1 > 0:
+            return (number1 - number2)*-1
+        return number1 - number2
+    return number2 - number1
 
 def div(number1:float,number2:float): #Altera a forma da conta dependendo se é a primeira conta de divisão ou a segunda
     try:
@@ -84,7 +93,7 @@ def uniqueOperation(display:str,operator:str): #Função para realizar operaçõ
         print('Sem números no display')
         return ''
 
-def commaFinder(display:str):
+def commaFinder(display:str): #Verifica se já tem ',' no display
     if display == '':
         print('Sem números no display')
         return ''
