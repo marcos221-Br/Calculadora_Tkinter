@@ -99,7 +99,7 @@ class Main: #Classe inicial
         self.frac = Button(self.containerNumpad, text='1/x', width=buttonWidth, font=self.defaultFontNumpad)
         self.frac['command'] = lambda command='1/x':self.uniqueOperation(operator=command)
         self.frac.grid(row=2,column=1)
-    
+
     def alterSignal(self): #Altera o sinal do número
         number = self.display.get()
         self.display.delete(0,END)
