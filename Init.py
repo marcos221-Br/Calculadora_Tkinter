@@ -100,6 +100,10 @@ class Main: #Classe inicial
         self.frac['command'] = lambda command='1/x':self.uniqueOperation(operator=command)
         self.frac.grid(row=2,column=1)
 
+        self.erase = Button(self.containerNumpad, text='\u21E6', width=buttonWidth, font=self.defaultFontNumpad)
+        self.erase['command'] = lambda command='del':self.display.delete(len(self.display.get())-1)
+        self.erase.grid(row=1,column=4)
+
     def alterSignal(self): #Altera o sinal do número
         number = self.display.get()
         self.display.delete(0,END)
@@ -126,6 +130,9 @@ class Main: #Classe inicial
         display = self.display.get()
         self.display.delete(0,END)
         self.display.insert(INSERT,fc.uniqueOperation(display,operator))
+
+    def apagaporra
+    
 
 init = Tk() #Atribui os comandos do iniciador do tkinter a init
 init.geometry('310x385') #Tamanho da janela
