@@ -106,6 +106,12 @@ def insertVerification(display:str,number:str): #Realiza verificações antes de
         return number
     return display + number
 
+def eraser(display:str): #Remove o ultimo número do display
+    display = display[:-1]
+    if display == '-':
+        return ''
+    return display
+
 operators = {'+':lambda number1, number2:number1 + number2,
              '-':lambda number1, number2:minus(number1,number2), #Verificar
              '*':lambda number1, number2:number1 * number2,

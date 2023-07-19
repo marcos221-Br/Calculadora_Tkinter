@@ -106,7 +106,7 @@ class Main: #Classe inicial
         self.clearDisplay.grid(row=1,column=2)
 
         self.erase = Button(self.containerNumpad, text='\u21E6', width=buttonWidth, font=self.defaultFontNumpad)
-        self.erase['command'] = lambda command='delete':self.display.delete(len(self.display.get())-1)
+        self.erase['command'] = lambda command='delete':self.removeLastCharacter()
         self.erase.grid(row=1,column=4)
 
     def alterSignal(self): #Altera o sinal do número
@@ -140,12 +140,17 @@ class Main: #Classe inicial
         display = self.display.get()
         self.display.delete(0,END)
         self.display.insert(INSERT,fc.insertVerification(display,number))
+    
+    def removeLastCharacter(self):
+        display = self.display.get()
+        self.display.delete(0,END)
+        self.display.insert(INSERT,fc.eraser(display))
 
 init = Tk() #Atribui os comandos do iniciador do tkinter a init
 init.geometry('310x385') #Tamanho da janela
 init.resizable(False,False) #Não deixa o usuário alterar o tamanho da janela
 init.title('Calculadora') #Titulo do programa
-ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID() #Seta o icone da TaskBar como o mesmo da aplicação
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID('Calculator') #Seta o icone da TaskBar como o mesmo da aplicação
 init.iconphoto(True,PhotoImage(file=r'Images\icon.ico')) #Seta o icone da aplicação
 Main(init) #Seta a classe inicial
 init.mainloop() #Inicia o programa
