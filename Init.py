@@ -1,6 +1,7 @@
 #Tela calculadora
 from tkinter import *
 import Functions as fc
+import ctypes
 
 class Main: #Classe inicial
     def __init__(self,master):
@@ -144,5 +145,7 @@ init = Tk() #Atribui os comandos do iniciador do tkinter a init
 init.geometry('310x385') #Tamanho da janela
 init.resizable(False,False) #Não deixa o usuário alterar o tamanho da janela
 init.title('Calculadora') #Titulo do programa
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID() #Seta o icone da TaskBar como o mesmo da aplicação
+init.iconphoto(True,PhotoImage(file=r'Images\icon.ico')) #Seta o icone da aplicação
 Main(init) #Seta a classe inicial
 init.mainloop() #Inicia o programa
