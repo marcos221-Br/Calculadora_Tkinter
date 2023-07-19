@@ -109,6 +109,10 @@ class Main: #Classe inicial
         self.erase['command'] = lambda command='delete':self.removeLastCharacter()
         self.erase.grid(row=1,column=4)
 
+        self.percent = Button(self.containerNumpad, text='%', width=buttonWidth, font=self.defaultFontNumpad)
+        self.percent['command'] = lambda command='%':''
+        self.percent.grid(row=1,column=1)
+
     def alterSignal(self): #Altera o sinal do número
         number = self.display.get()
         self.display.delete(0,END)
