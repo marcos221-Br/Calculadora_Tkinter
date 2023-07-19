@@ -24,47 +24,47 @@ class Main: #Classe inicial
         self.buttonClear.grid(row=1,column=3)
 
         self.number7 = Button(self.containerNumpad, text='7', width=buttonWidth, font=self.defaultFontNumpad)
-        self.number7['command'] = lambda command='7':self.display.insert(INSERT,command)
+        self.number7['command'] = lambda command='7':self.insertNumbers(number=command)
         self.number7.grid(row=3,column=1)
 
         self.number8 = Button(self.containerNumpad, text='8', width=buttonWidth, font=self.defaultFontNumpad)
-        self.number8['command'] = lambda command='8':self.display.insert(INSERT,command)
+        self.number8['command'] = lambda command='8':self.insertNumbers(number=command)
         self.number8.grid(row=3,column=2)
 
         self.number9 = Button(self.containerNumpad, text='9', width=buttonWidth, font=self.defaultFontNumpad)
-        self.number9['command'] = lambda command='9':self.display.insert(INSERT,command)
+        self.number9['command'] = lambda command='9':self.insertNumbers(number=command)
         self.number9.grid(row=3,column=3)
 
         self.number4 = Button(self.containerNumpad, text='4', width=buttonWidth, font=self.defaultFontNumpad)
-        self.number4['command'] = lambda command='4':self.display.insert(INSERT,command)
+        self.number4['command'] = lambda command='4':self.insertNumbers(number=command)
         self.number4.grid(row=4,column=1)
 
         self.number5 = Button(self.containerNumpad, text='5', width=buttonWidth, font=self.defaultFontNumpad)
-        self.number5['command'] = lambda command='5':self.display.insert(INSERT,command)
+        self.number5['command'] = lambda command='5':self.insertNumbers(number=command)
         self.number5.grid(row=4,column=2)
 
         self.number6 = Button(self.containerNumpad, text='6', width=buttonWidth, font=self.defaultFontNumpad)
-        self.number6['command'] = lambda command='6':self.display.insert(INSERT,command)
+        self.number6['command'] = lambda command='6':self.insertNumbers(number=command)
         self.number6.grid(row=4,column=3)
 
         self.number1 = Button(self.containerNumpad, text='1', width=buttonWidth, font=self.defaultFontNumpad)
-        self.number1['command'] = lambda command='1':self.display.insert(INSERT,command)
+        self.number1['command'] = lambda command='1':self.insertNumbers(number=command)
         self.number1.grid(row=5,column=1)
 
         self.number2 = Button(self.containerNumpad, text='2', width=buttonWidth, font=self.defaultFontNumpad)
-        self.number2['command'] = lambda command='2':self.display.insert(INSERT,command)
+        self.number2['command'] = lambda command='2':self.insertNumbers(number=command)
         self.number2.grid(row=5,column=2)
 
         self.number3 = Button(self.containerNumpad, text='3', width=buttonWidth, font=self.defaultFontNumpad)
-        self.number3['command'] = lambda command='3':self.display.insert(INSERT,command)
+        self.number3['command'] = lambda command='3':self.insertNumbers(number=command)
         self.number3.grid(row=5,column=3)
-        
-        self.signal = Button(self.containerNumpad, text='+/-', width=buttonWidth, font=self.defaultFontNumpad, command=self.alterSignal)
-        self.signal.grid(row=6,column=1)
 
         self.number0 = Button(self.containerNumpad, text='0', width=buttonWidth, font=self.defaultFontNumpad)
-        self.number0['command'] = lambda command='0':self.display.insert(INSERT,command)
+        self.number0['command'] = lambda command='0':self.insertNumbers(number=command)
         self.number0.grid(row=6,column=2)
+
+        self.signal = Button(self.containerNumpad, text='+/-', width=buttonWidth, font=self.defaultFontNumpad, command=self.alterSignal)
+        self.signal.grid(row=6,column=1)
 
         self.comma = Button(self.containerNumpad, text=',', width=buttonWidth, font=self.defaultFontNumpad, command=self.numberOfComma)
         self.comma.grid(row=6,column=3)
@@ -100,8 +100,12 @@ class Main: #Classe inicial
         self.frac['command'] = lambda command='1/x':self.uniqueOperation(operator=command)
         self.frac.grid(row=2,column=1)
 
+        self.clearDisplay = Button(self.containerNumpad, text='CE', width=buttonWidth, font=self.defaultFontNumpad)
+        self.clearDisplay['command'] = lambda command='CE':self.display.delete(0,END)
+        self.clearDisplay.grid(row=1,column=2)
+
         self.erase = Button(self.containerNumpad, text='\u21E6', width=buttonWidth, font=self.defaultFontNumpad)
-        self.erase['command'] = lambda command='del':self.display.delete(len(self.display.get())-1)
+        self.erase['command'] = lambda command='delete':self.display.delete(len(self.display.get())-1)
         self.erase.grid(row=1,column=4)
 
     def alterSignal(self): #Altera o sinal do número
@@ -109,7 +113,7 @@ class Main: #Classe inicial
         self.display.delete(0,END)
         self.display.insert(INSERT,fc.alterSignal(number))
     
-    def operator(self,operator): #Seleciona o operador que vai ser utilizado na conta
+    def operator(self,operator:str): #Seleciona o operador que vai ser utilizado na conta
         display = self.display.get()
         self.display.delete(0,END)
         self.display.insert(INSERT,fc.operation(display,operator))
@@ -126,13 +130,15 @@ class Main: #Classe inicial
         self.display.delete(0,END)
         self.display.insert(INSERT,fc.result(display))
     
-    def uniqueOperation(self,operator): #Mostra resultado para contas com apenas um número
+    def uniqueOperation(self,operator:str): #Mostra resultado para contas com apenas um número
         display = self.display.get()
         self.display.delete(0,END)
         self.display.insert(INSERT,fc.uniqueOperation(display,operator))
-
-    def apagaporra
     
+    def insertNumbers(self,number:str): #Realiza verificações antes de inserir números
+        display = self.display.get()
+        self.display.delete(0,END)
+        self.display.insert(INSERT,fc.insertVerification(display,number))
 
 init = Tk() #Atribui os comandos do iniciador do tkinter a init
 init.geometry('310x385') #Tamanho da janela

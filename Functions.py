@@ -101,6 +101,11 @@ def commaFinder(display:str): #Verifica se já tem ',' no display
         return ','
     return ''
 
+def insertVerification(display:str,number:str): #Realiza verificações antes de inserir números
+    if display == '0':
+        return number
+    return display + number
+
 operators = {'+':lambda number1, number2:number1 + number2,
              '-':lambda number1, number2:minus(number1,number2), #Verificar
              '*':lambda number1, number2:number1 * number2,
