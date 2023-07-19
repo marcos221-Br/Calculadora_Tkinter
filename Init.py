@@ -141,7 +141,7 @@ class Main: #Classe inicial
         self.display.delete(0,END)
         self.display.insert(INSERT,fc.insertVerification(display,number))
     
-    def removeLastCharacter(self):
+    def removeLastCharacter(self): #Remove o ultimo número do display
         display = self.display.get()
         self.display.delete(0,END)
         self.display.insert(INSERT,fc.eraser(display))
