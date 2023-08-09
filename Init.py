@@ -16,7 +16,7 @@ class Main: #Classe inicial
         self.containerNumpad.pack(side=LEFT, fill='both')
 
         #Tela em que aparecerá a conta e resultado
-        self.display = Entry(self.containerDisplay, justify='right', font=self.defaultFontDisplay, )
+        self.display = Entry(self.containerDisplay, justify='right', font=self.defaultFontDisplay,state='readonly')
         self.display.pack(fill=X)
 
         #Grade de botões
@@ -105,50 +105,94 @@ class Main: #Classe inicial
         self.clearDisplay['command'] = lambda command='CE':self.display.delete(0,END)
         self.clearDisplay.grid(row=1,column=2)
 
-        self.erase = Button(self.containerNumpad, text='\u21E6', width=buttonWidth, font=self.defaultFontNumpad)
-        self.erase['command'] = lambda command='delete':self.removeLastCharacter()
+        self.erase = Button(self.containerNumpad, text='\u21E6', width=buttonWidth, font=self.defaultFontNumpad, command=self.removeLastCharacter)
         self.erase.grid(row=1,column=4)
 
         self.percent = Button(self.containerNumpad, text='%', width=buttonWidth, font=self.defaultFontNumpad)
-        self.percent['command'] = lambda command='%':''
+        self.percent['command'] = lambda command='%':self.uniqueOperation(operator=command)
         self.percent.grid(row=1,column=1)
 
-    def alterSignal(self): #Altera o sinal do número
+        #Funções do teclado
+        self.number0.bind_all('<KeyPress-0>',self.insertNumbers)
+        self.number1.bind_all('<KeyPress-1>',self.insertNumbers)
+        self.number2.bind_all('<KeyPress-2>',self.insertNumbers)
+        self.number3.bind_all('<KeyPress-3>',self.insertNumbers)
+        self.number4.bind_all('<KeyPress-4>',self.insertNumbers)
+        self.number5.bind_all('<KeyPress-5>',self.insertNumbers)
+        self.number6.bind_all('<KeyPress-6>',self.insertNumbers)
+        self.number7.bind_all('<KeyPress-7>',self.insertNumbers)
+        self.number8.bind_all('<KeyPress-8>',self.insertNumbers)
+        self.number9.bind_all('<KeyPress-9>',self.insertNumbers)
+
+        self.buttonClear.bind_all('<Delete>',self.clear)
+        self.signal.bind_all('<F9>',self.alterSignal)
+        self.comma.bind_all('<KeyPress-,>',self.numberOfComma)
+        self.buttonResult.bind_all('<Return>',self.result)
+        self.buttonResult.bind_all('<KeyPress-=>',self.result)
+        self.erase.bind_all('<BackSpace>',self.removeLastCharacter)
+
+        self.sum.bind_all('<KeyPress-+>',self.operator)
+        self.minus.bind_all('<KeyPress-->',self.operator)
+        self.mult.bind_all('<KeyPress-*>',self.operator)
+        self.div.bind_all('<KeyPress-/>',self.operator)
+
+        self.sqrt.bind_all('<KeyPress-r>',self.uniqueOperation)
+        self.frac.bind_all('<KeyPress-f>',self.uniqueOperation)
+        self.pow.bind_all('<KeyPress-e>',self.uniqueOperation)
+        self.percent.bind_all('<KeyPress-p>',self.uniqueOperation)
+
+    def alterSignal(self,event=None): #Altera o sinal do número
+        self.display['state'] = 'normal'
         number = self.display.get()
         self.display.delete(0,END)
         self.display.insert(INSERT,fc.alterSignal(number))
+        self.display['state'] = 'readonly'
     
-    def operator(self,operator:str): #Seleciona o operador que vai ser utilizado na conta
+    def operator(self,event=None,operator:str=''): #Seleciona o operador que vai ser utilizado na conta
         display = self.display.get()
+        self.display['state'] = 'normal'
         self.display.delete(0,END)
-        self.display.insert(INSERT,fc.operation(display,operator))
+        self.display.insert(INSERT,fc.operation(display,event,operator))
+        self.display['state'] = 'readonly'
     
-    def clear(self): #Limpa o display e as variáveis
+    def clear(self,event=None): #Limpa o display e as variáveis
+        self.display['state'] = 'normal'
         self.display.delete(0,END)
         fc.clear()
+        self.display['state'] = 'readonly'
 
-    def numberOfComma(self): #Limita o número de virgulas que pode ter no número
+    def numberOfComma(self,event=None): #Limita o número de virgulas que pode ter no número
+        self.display['state'] = 'normal'
         self.display.insert(INSERT,fc.commaFinder(self.display.get()))
+        self.display['state'] = 'readonly'
     
-    def result(self): #Mostra o resultado da conta
+    def result(self,event=None): #Mostra o resultado da conta
+        self.display['state'] = 'normal'
         display = self.display.get()
         self.display.delete(0,END)
         self.display.insert(INSERT,fc.result(display))
+        self.display['state'] = 'readonly'
     
-    def uniqueOperation(self,operator:str): #Mostra resultado para contas com apenas um número
+    def uniqueOperation(self,event=None,operator:str=''): #Mostra resultado para contas com apenas um número
+        self.display['state'] = 'normal'
         display = self.display.get()
         self.display.delete(0,END)
-        self.display.insert(INSERT,fc.uniqueOperation(display,operator))
+        self.display.insert(INSERT,fc.uniqueOperation(display,event,operator))
+        self.display['state'] = 'readonly'
     
-    def insertNumbers(self,number:str): #Realiza verificações antes de inserir números
+    def insertNumbers(self,event=None,number:str=''): #Realiza verificações antes de inserir números
+        self.display['state'] = 'normal'
         display = self.display.get()
         self.display.delete(0,END)
-        self.display.insert(INSERT,fc.insertVerification(display,number))
+        self.display.insert(INSERT,fc.insertVerification(display,event,number))
+        self.display['state'] = 'readonly'
     
-    def removeLastCharacter(self): #Remove o ultimo número do display
+    def removeLastCharacter(self,event=None): #Remove o ultimo número do display
+        self.display['state'] = 'normal'
         display = self.display.get()
         self.display.delete(0,END)
         self.display.insert(INSERT,fc.eraser(display))
+        self.display['state'] = 'readonly'
 
 init = Tk() #Atribui os comandos do iniciador do tkinter a init
 init.geometry('310x385') #Tamanho da janela
