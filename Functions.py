@@ -16,7 +16,7 @@ def alterSignal(display:str): #Altera o sinal do número que está sendo mostrad
         return ''
 
 def operation(display:str,event,operator:str): #Seta a operação que vai ser feita
-    if event.char == 'c':
+    if event.char == 'c' or event.char == '':
         return display
     if operator == '':
         operator = event.char
